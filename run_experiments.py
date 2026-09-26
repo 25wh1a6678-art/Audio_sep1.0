@@ -29,3 +29,11 @@ for mixture, prompt, ptype in EXPERIMENTS:
 
     results.append((mix_name, prompt, ptype, elapsed, out_path))
     print(f"  -> saved to {out_path} ({elapsed}s)")
+
+# SDR scoring — only if a reference clean file exists at samples/<mix>_ref.wav
+from metrics import compute_sdr
+
+for i, (mix_name, prompt, ptype, elapsed, out_path) in enumerate(results):
+    ref_path = f"samples/{mix_name}_ref.wav"
+    sdr = compute_sdr(ref_path, out_path) if os.path.exists(ref_path) else "N/A"
+    results[i] = (mix_name, prompt, ptype, elapsed, out_path, sdr)
