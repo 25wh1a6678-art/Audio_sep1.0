@@ -37,3 +37,13 @@ for i, (mix_name, prompt, ptype, elapsed, out_path) in enumerate(results):
     ref_path = f"samples/{mix_name}_ref.wav"
     sdr = compute_sdr(ref_path, out_path) if os.path.exists(ref_path) else "N/A"
     results[i] = (mix_name, prompt, ptype, elapsed, out_path, sdr)
+
+# Write to experiments.md
+with open("experiments.md", "w") as f:
+    f.write("| mixture | prompt | prompt_type | SDR | runtime (s) | quality (1-5) | observations |\n")
+    f.write("|---------|--------|-------------|-----|-------------|---------------|--------------|\n")
+    for mix_name, prompt, ptype, elapsed, out_path, sdr in results:
+        sdr_str = f"{sdr:.2f}" if isinstance(sdr, float) else sdr
+        f.write(f"| {mix_name} | {prompt} | {ptype} | {sdr_str} | {elapsed} | | |\n")
+
+print("\nexperiments.md updated.")
