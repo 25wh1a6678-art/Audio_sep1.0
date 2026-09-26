@@ -7,4 +7,5 @@ venv/
 *.ckpt
 *.pth
 outputs/*.wav
+!samples/*.wav
 AudioSep/
