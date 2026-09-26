@@ -23,3 +23,9 @@ def load_model():
             device=_device,
         )
     return _model, _device
+
+
+def separate(audio_path: str, prompt: str, output_path: str) -> str:
+    model, device = load_model()
+    _audiosep_inference(model, audio_path, prompt, output_path, device)
+    return output_path
